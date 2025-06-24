@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการวันลาพนักงาน</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏢 ระบบจัดการวันลาพนักงาน</h1>
+            <p>Employee Leave Management System</p>
+        </div>
+
+        <div class="content">
+            <!-- Group Management Section -->
+            <div class="section">
+                <h2>🏷️ จัดการกลุ่มงาน</h2>
+                <div class="form-group">
+                    <label for="groupName">ชื่อกลุ่มงาน:</label>
+                    <input type="text" id="groupName" placeholder="เช่น Network, Lab, Development">
+                </div>
+                <button class="btn btn-success" onclick="addGroup()">เพิ่มกลุ่มงาน</button>
+
+                <div class="groups-list" id="groupsList"></div>
+            </div>
+
+            <!-- Employee Management Section -->
+            <div class="section">
+                <h2>👥 จัดการพนักงาน</h2>
+                <div class="form-group">
+                    <label for="empGroup">เลือกกลุ่มงาน:</label>
+                    <select id="empGroup">
+                        <option value="">เลือกกลุ่มงาน</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="empName">ชื่อพนักงาน:</label>
+                    <input type="text" id="empName" placeholder="ชื่อ-นามสกุล">
+                </div>
+                <button class="btn btn-success" onclick="addEmployee()">เพิ่มพนักงาน</button>
+
+                <div class="employees-list" id="employeesList"></div>
+            </div>
+
+            <!-- Export/Import Section -->
+            <div class="export-section">
+                <h2 style="color: white; margin-bottom: 20px;">📁 นำเข้า/ส่งออกข้อมูล</h2>
+                <button class="btn" onclick="exportData()" style="background: white; color: #27ae60;">📤 Export JSON</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData()">
+                <button class="btn" onclick="document.getElementById('importFile').click()" style="background: white; color: #27ae60;">📥 Import JSON</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employee Edit Modal -->
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>✏️ แก้ไขข้อมูลพนักงาน</h2>
+            
+            <div class="form-group">
+                <label for="modalEmpName">ชื่อพนักงาน:</label>
+                <input type="text" id="modalEmpName">
+            </div>
+
+            <div class="form-group">
+                <label for="modalLeaveDays">วันลา (คั่นด้วยเครื่องหมายจุลภาค):</label>
+                <input type="text" id="modalLeaveDays" placeholder="2025-07-15, 2025-07-20">
+            </div>
+
+            <div class="form-group">
+                <label>ข้อจำกัดการทำงาน:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalNoWeekends">
+                        <label for="modalNoWeekends">ไม่ทำงานวันหยุดสุดสัปดาห์</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalNoWeekdays">
+                        <label for="modalNoWeekdays">ไม่ทำงานวันธรรมดา</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>วันที่ไม่สามารถทำงานได้:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalMonday" value="monday">
+                        <label for="modalMonday">จันทร์</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalTuesday" value="tuesday">
+                        <label for="modalTuesday">อังคาร</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalWednesday" value="wednesday">
+                        <label for="modalWednesday">พุธ</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalThursday" value="thursday">
+                        <label for="modalThursday">พฤหัสบดี</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalFriday" value="friday">
+                        <label for="modalFriday">ศุกร์</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalSaturday" value="saturday">
+                        <label for="modalSaturday">เสาร์</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="modalSunday" value="sunday">
+                        <label for="modalSunday">อาทิตย์</label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-success" onclick="saveEmployee()">บันทึก</button>
+            <button class="btn btn-danger" onclick="closeModal()">ยกเลิก</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
